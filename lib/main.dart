@@ -50,19 +50,23 @@ class MyHomePage extends StatelessWidget {
     var pair = appState.current; // ← Add this.
 
     return Scaffold(
-      body: Column(
-        children: [
-          Text('A random AWESOME idea:'), // ← Example change.
-          //Text(appState.current.asLowerCase),
-          BigCard(pair: pair), // ← Change to this.
-          // ↓ Add this.
-          ElevatedButton(
-            onPressed: () {
-              appState.getNext(); // ← This instead of print().
-            },
-            child: Text('Next'),
-          ),
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center, // ← Add this.
+          children: [
+            // Text('A random AWESOME idea:'), // ← Example change.← 説明不要なので5で削除
+            //Text(appState.current.asLowerCase),
+            BigCard(pair: pair), // ← Change to this.
+            SizedBox(height: 10),
+            // ↓ Add this.
+            ElevatedButton(
+              onPressed: () {
+                appState.getNext(); // ← This instead of print().
+              },
+              child: Text('Next'),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -79,11 +83,24 @@ class BigCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context); // ← Add this.
+    // ↓ Add this. theme.textTheme.:アプリのフォントテーマにアクセス
+    //  '! 演算子（感嘆符演算子）はnullでないことを開発者が確信している場合に使う演算子
+    final style = theme.textTheme.displayMedium!.copyWith(
+      color: theme.colorScheme.onPrimary,
+    );
     return Card(
       color: theme.colorScheme.primary, // ← And also this.
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text(pair.asLowerCase),
+        // child: Text(pair.asLowerCase),
+        // ↓ Change this line.
+        // child: Text(pair.asLowerCase, style: style),
+        // ↓ Make the following change.
+        child: Text(
+          pair.asLowerCase,
+          style: style,
+          semanticsLabel: "${pair.first} ${pair.second}",
+        ),
       ),
     );
   }
