@@ -34,6 +34,7 @@ class MyAppState extends ChangeNotifier {
   var current = WordPair.random();
 
   // ↓ Add this.
+  // [] で初期化
   void getNext() {
     current = WordPair.random();
     notifyListeners();
@@ -59,11 +60,16 @@ class MyHomePage extends StatelessWidget {
             BigCard(pair: pair), // ← Change to this.
             SizedBox(height: 10),
             // ↓ Add this.
-            ElevatedButton(
-              onPressed: () {
-                appState.getNext(); // ← This instead of print().
-              },
-              child: Text('Next'),
+            Row(
+              mainAxisSize: MainAxisSize.min, // ← Add this.
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    appState.getNext(); // ← This instead of print().
+                  },
+                  child: Text('Next'),
+                ),
+              ],
             ),
           ],
         ),
