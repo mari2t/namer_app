@@ -128,44 +128,47 @@ class _MyHomePageState extends State<MyHomePage> {
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
-    return Scaffold(
-      body: Row(
-        children: [
-          SafeArea(
-            // ナビゲーション ボタンがモバイル ステータスバーなどで隠されるのを防ぐ
-            child: NavigationRail(
-              extended: false,
-              destinations: [
-                NavigationRailDestination(
-                  icon: Icon(Icons.home),
-                  label: Text('Home'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.favorite),
-                  label: Text('Favorites'),
-                ),
-              ],
-              // selectedIndex: 0,
-              selectedIndex: selectedIndex, // ← Change to this.
-              onDestinationSelected: (value) {
-                // print('selected: $value');
-                // ↓ Replace print with this.
-                setState(() {
-                  selectedIndex = value;
-                });
-              },
+    return LayoutBuilder(builder: (context, constraints) {
+      return Scaffold(
+        body: Row(
+          children: [
+            SafeArea(
+              // ナビゲーション ボタンがモバイル ステータスバーなどで隠されるのを防ぐ
+              child: NavigationRail(
+                //extended: false,
+                extended: constraints.maxWidth >= 600, // ← Here.
+                destinations: [
+                  NavigationRailDestination(
+                    icon: Icon(Icons.home),
+                    label: Text('Home'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.favorite),
+                    label: Text('Favorites'),
+                  ),
+                ],
+                // selectedIndex: 0,
+                selectedIndex: selectedIndex, // ← Change to this.
+                onDestinationSelected: (value) {
+                  // print('selected: $value');
+                  // ↓ Replace print with this.
+                  setState(() {
+                    selectedIndex = value;
+                  });
+                },
+              ),
             ),
-          ),
-          Expanded(
-            child: Container(
-              color: Theme.of(context).colorScheme.primaryContainer,
-              //child: GeneratorPage(),
-              child: page, // ← Here.
+            Expanded(
+              child: Container(
+                color: Theme.of(context).colorScheme.primaryContainer,
+                //child: GeneratorPage(),
+                child: page, // ← Here.
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    });
   }
 }
 
