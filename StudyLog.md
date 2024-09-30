@@ -1,5 +1,9 @@
 # 学習ログ
 
+## 2024/9/30
+
+1.  ReadmeにLog追加
+
 ## 2024/9/29
 
 1.  FavoritesPage()を追加。Placeholder()と置き換えた。
